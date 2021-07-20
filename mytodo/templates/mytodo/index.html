@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<HTML>
+    <head>
+        <title> My Todo</title>
+    </head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <style>
+        body {
+            background-color: #5484b8;
+            text-decoration: none;
+        }
+    
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+    
+        input::placeholder {
+            color: #d3d3d3;
+        }
+    
+        .submit {
+            background-color: #6BA3E8;
+        }
+    
+        .center-column {
+            
+            width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 6px 2px 30px 0px rgba(0, 0, 0   , 0.75);
+        }
+    
+        .item-row {
+            background-color: #906abd;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 16px;
+            list-style-type: none;
+            box-shadow: 0px -1px 10px -4px rgba(0, 0, 0, 0.75);
+        }
+    
+        .btn-danger {
+            background-color: #ffae19;
+            border-color: #e59400;
+            float: right;
+        }
+       .center-column h1{
+           text-align: center;
+       }
+    </style>
+    <body>
+        <div class="center-column">
+        <h1>Things Todo</h1>
+        <form method="POST" action="/">
+            {%csrf_token%}
+            
+            {{form.title}}
+            <input type="submit"  class="btn btn-info" name="create-todo">
+        </form>
+        <div class="todo-list">
+        {% for task in task %}
+        <div class="item-row">
+            {% if task.complete == True %}
+                <div class="half">
+                <li><a class="btn btn-sm btn-info" href="{% url 'update_todo' task.id %}"><strike>{{task.title}}</strike></a> <a class="btn btn-sm btn-danger" href="{% url 'delete_todo' task.id%}"}>Delete</a> </li>
+                </div>
+            {% else %}
+            <li><a class="btn btn-sm btn-info" href="{% url 'update_todo' task.id %}">{{task.title}}</a> <a class="btn btn-sm btn-danger"  href="{% url 'delete_todo' task.id %}"}>Delete</a> </li>
+            {%endif%}
+        </div>
+        {%endfor%}
+        </div>
+            </div>
+    </body>
+</HTML>
